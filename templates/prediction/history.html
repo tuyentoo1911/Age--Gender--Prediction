@@ -1,0 +1,221 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+  <div class="col-12">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+      <h1 class="display-4 fw-bold mb-4">
+        <i class="bi bi-clock-history me-3"></i>
+        Lịch sử Dự đoán
+      </h1>
+      <p class="lead">Xem lại các kết quả dự đoán gần đây của hệ thống</p>
+    </div>
+
+    {% if predictions %}
+    <!-- Statistics Summary -->
+    <div class="row mb-4">
+      <div class="col-md-3 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-images"
+            style="font-size: 2rem; margin-bottom: 0.5rem"
+          ></i>
+          <h5>{{ predictions|length }}</h5>
+          <p>Dự đoán gần đây</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-person-fill"
+            style="font-size: 2rem; margin-bottom: 0.5rem"
+          ></i>
+          <h5>{{ predictions|length|floatformat:0 }}</h5>
+          <p>Ảnh đã xử lý</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-speedometer2"
+            style="font-size: 2rem; margin-bottom: 0.5rem"
+          ></i>
+          <h5>&lt; 3s</h5>
+          <p>Thời gian trung bình</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-check-circle-fill"
+            style="font-size: 2rem; margin-bottom: 0.5rem"
+          ></i>
+          <h5>100%</h5>
+          <p>Thành công</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Predictions Grid -->
+    <div class="row">
+      {% for prediction in predictions %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          <div class="position-relative">
+            <img
+              src="{{ prediction.get_image_url }}"
+              class="card-img-top"
+              style="height: 200px; object-fit: cover"
+            />
+            <div class="position-absolute top-0 end-0 m-2">
+              <span class="badge bg-primary">#{{ prediction.id }}</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-6">
+                <div class="d-flex flex-column align-items-center">
+                  <i
+                    class="bi bi-calendar-fill text-primary mb-1"
+                    style="font-size: 1.5rem"
+                  ></i>
+                  <strong>{{ prediction.predicted_age }} tuổi</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex flex-column align-items-center">
+                  <i
+                    class="bi bi-{% if prediction.predicted_gender == 'M' %}person-fill{% else %}person-dress-fill{% endif %} text-secondary mb-1"
+                    style="font-size: 1.5rem"
+                  ></i>
+                  <strong>{{ prediction.get_predicted_gender_display }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <small class="text-muted">
+                <i class="bi bi-clock me-1"></i>
+                {{ prediction.uploaded_at|date:"d/m/Y H:i" }}
+              </small>
+              {% if prediction.gender_confidence %}
+              <br />
+              <small class="text-muted">
+                <i class="bi bi-bullseye me-1"></i>
+                Độ tin cậy: {{ prediction.gender_confidence|floatformat:1 }}%
+              </small>
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-footer bg-transparent">
+            <div class="d-grid">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                onclick="showDetails('{{ prediction.id }}')"
+              >
+                <i class="bi bi-eye me-1"></i>Xem chi tiết
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center">
+      <div class="card">
+        <div class="card-body py-5">
+          <i
+            class="bi bi-inbox"
+            style="font-size: 5rem; color: #6c757d; margin-bottom: 2rem"
+          ></i>
+          <h4 class="text-muted">Chưa có dự đoán nào</h4>
+          <p class="text-muted mb-4">
+            Bạn chưa thực hiện dự đoán nào. Hãy thử upload một ảnh để bắt đầu!
+          </p>
+          <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+            <i class="bi bi-camera-fill me-2"></i>Thử ngay
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-5">
+      <a href="{% url 'home' %}" class="btn btn-primary btn-lg me-3">
+        <i class="bi bi-plus-circle me-2"></i>Dự đoán mới
+      </a>
+      <a href="{% url 'stats' %}" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-graph-up me-2"></i>Xem thống kê
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chi tiết dự đoán</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  function showDetails(predictionId) {
+      // Find the prediction data
+      const predictions = [
+          {% for prediction in predictions %}
+          {
+              id: {{ prediction.id }},
+              image_url: "{{ prediction.get_image_url }}",
+              age: {{ prediction.predicted_age }},
+              gender: "{{ prediction.get_predicted_gender_display }}",
+              gender_confidence: {{ prediction.gender_confidence|default:0 }},
+              uploaded_at: "{{ prediction.uploaded_at|date:'d/m/Y H:i' }}",
+              processing_time: {{ prediction.processing_time|default:0 }}
+          },
+          {% endfor %}
+      ];
+
+      const prediction = predictions.find(p => p.id == predictionId);
+
+      if (prediction) {
+          const modalBody = document.getElementById('modalBody');
+          modalBody.innerHTML = `
+              <div class="row">
+                  <div class="col-md-6 text-center">
+                      <img src="${prediction.image_url}" class="img-fluid rounded" style="max-height: 300px;">
+                  </div>
+                  <div class="col-md-6">
+                      <h6>Kết quả dự đoán:</h6>
+                      <ul class="list-unstyled">
+                          <li><strong>ID:</strong> #${prediction.id}</li>
+                          <li><strong>Tuổi:</strong> ${prediction.age} tuổi</li>
+                          <li><strong>Giới tính:</strong> ${prediction.gender}</li>
+                          <li><strong>Độ tin cậy:</strong> ${prediction.gender_confidence.toFixed(1)}%</li>
+                          <li><strong>Thời gian xử lý:</strong> ${prediction.processing_time.toFixed(2)}s</li>
+                          <li><strong>Ngày tạo:</strong> ${prediction.uploaded_at}</li>
+                      </ul>
+                  </div>
+              </div>
+          `;
+
+          const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+          modal.show();
+      }
+  }
+</script>
+{% endblock %}

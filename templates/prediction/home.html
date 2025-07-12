@@ -1,0 +1,361 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <h1 class="display-4 fw-bold mb-4">
+        <i class="bi bi-robot me-3"></i>
+        Nhận diện Tuổi & Giới tính
+      </h1>
+      <p class="lead mb-4">
+        Sử dụng trí tuệ nhân tạo để dự đoán tuổi và giới tính từ hình ảnh khuôn
+        mặt một cách chính xác và nhanh chóng.
+      </p>
+      <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+        <button class="btn btn-primary btn-lg" onclick="scrollToUpload()">
+          <i class="bi bi-cloud-upload-fill me-2"></i>Thử ngay
+        </button>
+        <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-info-circle me-2"></i>Tìm hiểu thêm
+        </a>
+      </div>
+    </div>
+    <div class="col-lg-6 text-center">
+      <div class="feature-icons">
+        <i class="bi bi-person-circle feature-icon"></i>
+        <i
+          class="bi bi-arrow-right mx-3"
+          style="font-size: 2rem; color: white"
+        ></i>
+        <i class="bi bi-cpu feature-icon"></i>
+        <i
+          class="bi bi-arrow-right mx-3"
+          style="font-size: 2rem; color: white"
+        ></i>
+        <i class="bi bi-graph-up feature-icon"></i>
+      </div>
+      <p class="text-light mt-3">Upload → AI Analysis → Results</p>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mb-5">
+  <div class="col-md-4 mb-3">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-lightning-charge-fill feature-icon"></i>
+        <h5 class="card-title">Xử lý nhanh</h5>
+        <p class="card-text">
+          Kết quả dự đoán trong vài giây với độ chính xác cao
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-shield-check-fill feature-icon"></i>
+        <h5 class="card-title">An toàn bảo mật</h5>
+        <p class="card-text">
+          Không lưu trữ ảnh cá nhân, bảo vệ quyền riêng tư
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-phone-fill feature-icon"></i>
+        <h5 class="card-title">Responsive</h5>
+        <p class="card-text">Hoạt động mượt mà trên mọi thiết bị di động</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Section -->
+<div class="row" id="upload-section">
+  <div class="col-lg-6 mb-4">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4><i class="bi bi-cloud-upload-fill me-2"></i>Upload từ Máy tính</h4>
+      </div>
+      <div class="card-body">
+        <form
+          method="post"
+          action="{% url 'predict' %}"
+          enctype="multipart/form-data"
+          id="uploadForm"
+        >
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ upload_form.image }}
+            <div class="form-text">{{ upload_form.image.help_text }}</div>
+          </div>
+
+          <!-- Image Preview -->
+          <div id="imagePreview" class="text-center mb-3" style="display: none">
+            <img
+              id="previewImg"
+              class="result-image"
+              style="max-width: 100%; max-height: 300px"
+            />
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="bi bi-robot me-2"></i>Dự đoán Tuổi & Giới tính
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 mb-4">
+    <div class="card">
+      <div class="card-header text-center">
+        <h4><i class="bi bi-camera-fill me-2"></i>Chụp từ Camera</h4>
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-3">
+          <video
+            id="cameraVideo"
+            class="camera-preview"
+            style="width: 100%; max-width: 400px; display: none"
+          ></video>
+          <canvas id="cameraCanvas" style="display: none"></canvas>
+          <div
+            id="cameraPlaceholder"
+            class="camera-preview bg-light d-flex align-items-center justify-content-center"
+            style="width: 100%; height: 300px"
+          >
+            <div class="text-muted">
+              <i class="bi bi-camera-fill" style="font-size: 4rem"></i>
+              <p class="mt-2">Nhấn "Mở Camera" để bắt đầu</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button id="startCamera" class="btn btn-success btn-lg">
+            <i class="bi bi-camera-fill me-2"></i>Mở Camera
+          </button>
+          <button
+            id="capturePhoto"
+            class="btn btn-primary btn-lg"
+            style="display: none"
+          >
+            <i class="bi bi-camera-fill me-2"></i>Chụp ảnh
+          </button>
+          <button
+            id="stopCamera"
+            class="btn btn-secondary"
+            style="display: none"
+          >
+            <i class="bi bi-stop-circle-fill me-2"></i>Tắt Camera
+          </button>
+        </div>
+
+        <!-- Camera Results -->
+        <div id="cameraResults" style="display: none">
+          <hr />
+          <div class="text-center">
+            <img
+              id="capturedImage"
+              class="result-image"
+              style="max-width: 100%; max-height: 200px"
+            />
+            <div id="cameraResultsData" class="prediction-result mt-3">
+              <!-- Results will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Predictions -->
+{% if recent_predictions %}
+<div class="row mb-5">
+  <div class="col-12">
+    <h3 class="text-center text-white mb-4">
+      <i class="bi bi-clock-history me-2"></i>Dự đoán gần đây
+    </h3>
+    <div class="row">
+      {% for prediction in recent_predictions %}
+      <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-3">
+        <div class="card text-center">
+          <img
+            src="{{ prediction.get_image_url }}"
+            class="card-img-top"
+            style="height: 150px; object-fit: cover"
+          />
+          <div class="card-body p-2">
+            <small class="text-muted">
+              {{ prediction.predicted_age }} tuổi<br />
+              {{ prediction.get_predicted_gender_display }}
+            </small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Loading Modal -->
+<div
+  class="modal fade"
+  id="loadingModal"
+  tabindex="-1"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center p-4">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <h5>Đang xử lý ảnh...</h5>
+        <p class="text-muted mb-0">Vui lòng đợi trong giây lát</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Image preview for file upload
+  document
+    .getElementById("imageInput")
+    .addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const preview = document.getElementById("imagePreview");
+          const img = document.getElementById("previewImg");
+          img.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+  // Form submission with loading modal
+  document.getElementById("uploadForm").addEventListener("submit", function () {
+    const modal = new bootstrap.Modal(document.getElementById("loadingModal"));
+    modal.show();
+  });
+
+  // Camera functionality
+  let stream = null;
+  let video = document.getElementById("cameraVideo");
+  let canvas = document.getElementById("cameraCanvas");
+  let ctx = canvas.getContext("2d");
+
+  document
+    .getElementById("startCamera")
+    .addEventListener("click", async function () {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 640, height: 480 },
+        });
+
+        video.srcObject = stream;
+        video.play();
+
+        // Show/hide elements
+        document.getElementById("cameraPlaceholder").style.display = "none";
+        video.style.display = "block";
+        document.getElementById("startCamera").style.display = "none";
+        document.getElementById("capturePhoto").style.display = "block";
+        document.getElementById("stopCamera").style.display = "block";
+      } catch (err) {
+        alert("Không thể truy cập camera: " + err.message);
+      }
+    });
+
+  document
+    .getElementById("capturePhoto")
+    .addEventListener("click", function () {
+      // Set canvas size
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      // Draw video frame to canvas
+      ctx.drawImage(video, 0, 0);
+
+      // Convert to base64
+      const imageData = canvas.toDataURL("image/jpeg", 0.8);
+
+      // Send to server
+      fetch('{% url "camera_predict" %}', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image_data: imageData,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // Show results
+            document.getElementById("capturedImage").src = imageData;
+            document.getElementById("cameraResultsData").innerHTML = `
+                <h5>Kết quả dự đoán</h5>
+                <div class="row">
+                    <div class="col-6">
+                        <i class="bi bi-calendar-fill me-2"></i>
+                        <strong>${data.age} tuổi</strong>
+                    </div>
+                    <div class="col-6">
+                        <i class="bi bi-person-fill me-2"></i>
+                        <strong>${data.gender}</strong>
+                    </div>
+                </div>
+                <small class="d-block mt-2">
+                    Độ tin cậy: ${data.gender_confidence} | Thời gian: ${data.processing_time}
+                </small>
+            `;
+            document.getElementById("cameraResults").style.display = "block";
+          } else {
+            alert("Lỗi: " + data.error);
+          }
+        })
+        .catch((error) => {
+          alert("Có lỗi xảy ra: " + error);
+        });
+    });
+
+  document.getElementById("stopCamera").addEventListener("click", function () {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      stream = null;
+    }
+
+    // Reset UI
+    video.style.display = "none";
+    document.getElementById("cameraPlaceholder").style.display = "flex";
+    document.getElementById("startCamera").style.display = "block";
+    document.getElementById("capturePhoto").style.display = "none";
+    document.getElementById("stopCamera").style.display = "none";
+    document.getElementById("cameraResults").style.display = "none";
+  });
+
+  // Smooth scroll to upload section
+  function scrollToUpload() {
+    document.getElementById("upload-section").scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+</script>
+{% endblock %}

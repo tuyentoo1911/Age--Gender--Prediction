@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h2>Debug Template Test</h2>
+
+  <h3>Result Object:</h3>
+  <pre>{{ result|pprint }}</pre>
+
+  <h3>Prediction Object:</h3>
+  <pre>{{ prediction|pprint }}</pre>
+
+  <h3>Individual Values:</h3>
+  <p>Age: {{ result.age }}</p>
+  <p>Gender: {{ result.gender_label }}</p>
+  <p>Processing Time: {{ result.processing_time }}</p>
+  <p>Uploaded At: {{ prediction.uploaded_at }}</p>
+  <p>Prediction ID: {{ prediction.id }}</p>
+
+  <h3>Raw Template Syntax Test:</h3>
+  <p>
+    This should show processing time: {{ result.processing_time|floatformat:2
+    }}s
+  </p>
+  <p>This should show date: {{ prediction.uploaded_at|date:"d/m/Y H:i" }}</p>
+</div>
+{% endblock %}

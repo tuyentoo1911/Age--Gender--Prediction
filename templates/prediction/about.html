@@ -1,0 +1,289 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+      <h1 class="display-4 fw-bold mb-4">
+        <i class="bi bi-info-circle-fill me-3"></i>
+        Giới thiệu
+      </h1>
+      <p class="lead">
+        Tìm hiểu về công nghệ và cách thức hoạt động của hệ thống nhận diện AI
+      </p>
+    </div>
+
+    <!-- About Content -->
+    <div class="row mb-5">
+      <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4><i class="bi bi-robot me-2 text-primary"></i>Công nghệ AI</h4>
+            <p>
+              Hệ thống sử dụng các mô hình học sâu (Deep Learning) được huấn
+              luyện trên hàng triệu hình ảnh khuôn mặt để có thể:
+            </p>
+            <ul>
+              <li>Nhận diện độ tuổi với độ chính xác cao</li>
+              <li>Phân loại giới tính nam/nữ</li>
+              <li>Xử lý nhanh chóng trong vài giây</li>
+              <li>Hoạt động với nhiều loại ảnh khác nhau</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h4>
+              <i class="bi bi-shield-check me-2 text-success"></i>Bảo mật &
+              Riêng tư
+            </h4>
+            <p>Chúng tôi cam kết bảo vệ quyền riêng tư của người dùng:</p>
+            <ul>
+              <li>Không lưu trữ ảnh cá nhân lâu dài</li>
+              <li>Dữ liệu được mã hóa trong quá trình truyền</li>
+              <li>Không chia sẻ thông tin với bên thứ 3</li>
+              <li>Tuân thủ các quy định về bảo vệ dữ liệu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="card mb-5">
+      <div class="card-header">
+        <h4 class="mb-0">
+          <i class="bi bi-gear-fill me-2"></i>Chi tiết Kỹ thuật
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Framework & Công nghệ:</h6>
+            <ul>
+              <li><strong>Backend:</strong> Django (Python)</li>
+              <li><strong>ML Framework:</strong> TensorFlow/Keras</li>
+              <li><strong>Frontend:</strong> Bootstrap 5</li>
+              <li><strong>Database:</strong> SQLite/PostgreSQL</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>Mô hình AI:</h6>
+            <ul>
+              <li><strong>Kiến trúc:</strong> Convolutional Neural Networks</li>
+              <li><strong>Kích thước đầu vào:</strong> 64x64 pixels</li>
+              <li><strong>Định dạng:</strong> Grayscale</li>
+              <li><strong>Độ chính xác:</strong> >85% trên tập test</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How it Works -->
+    <div class="card mb-5">
+      <div class="card-header">
+        <h4 class="mb-0">
+          <i class="bi bi-diagram-3-fill me-2"></i>Cách thức hoạt động
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3 text-center mb-3">
+            <div
+              class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              1
+            </div>
+            <h6>Upload Ảnh</h6>
+            <p class="small text-muted">
+              Người dùng tải ảnh lên hoặc chụp từ camera
+            </p>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div
+              class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              2
+            </div>
+            <h6>Tiền xử lý</h6>
+            <p class="small text-muted">Ảnh được resize và chuẩn hóa</p>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div
+              class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              3
+            </div>
+            <h6>AI Dự đoán</h6>
+            <p class="small text-muted">Mô hình AI phân tích và dự đoán</p>
+          </div>
+          <div class="col-md-3 text-center mb-3">
+            <div
+              class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+              "
+            >
+              4
+            </div>
+            <h6>Hiển thị</h6>
+            <p class="small text-muted">Kết quả được trả về và hiển thị</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <h3 class="text-center text-white mb-4">Tính năng nổi bật</h3>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-speedometer2"
+            style="font-size: 3rem; margin-bottom: 1rem"
+          ></i>
+          <h5>Xử lý nhanh</h5>
+          <p>Kết quả trong &lt; 3 giây</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-bullseye"
+            style="font-size: 3rem; margin-bottom: 1rem"
+          ></i>
+          <h5>Độ chính xác cao</h5>
+          <p>Độ chính xác &gt; 85%</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="stats-card">
+          <i
+            class="bi bi-phone"
+            style="font-size: 3rem; margin-bottom: 1rem"
+          ></i>
+          <h5>Responsive</h5>
+          <p>Hoạt động trên mọi thiết bị</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="card mb-5">
+      <div class="card-header">
+        <h4 class="mb-0">
+          <i class="bi bi-question-circle-fill me-2"></i>Câu hỏi thường gặp
+        </h4>
+      </div>
+      <div class="card-body">
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse1"
+              >
+                Độ chính xác của hệ thống như thế nào?
+              </button>
+            </h2>
+            <div
+              id="collapse1"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Hệ thống có độ chính xác trên 85% cho việc nhận diện giới tính
+                và ước lượng tuổi với sai số trung bình ±3-5 tuổi.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse2"
+              >
+                Ảnh của tôi có được lưu trữ không?
+              </button>
+            </h2>
+            <div
+              id="collapse2"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Ảnh chỉ được lưu tạm thời để xử lý và sẽ được xóa sau một thời
+                gian nhất định. Chúng tôi không chia sẻ dữ liệu cá nhân.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse3"
+              >
+                Tôi có thể sử dụng trên điện thoại không?
+              </button>
+            </h2>
+            <div
+              id="collapse3"
+              class="accordion-collapse collapse"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Có, website được tối ưu hóa cho mobile và hỗ trợ chụp ảnh trực
+                tiếp từ camera điện thoại.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <a href="{% url 'home' %}" class="btn btn-primary btn-lg me-3">
+        <i class="bi bi-arrow-left me-2"></i>Quay lại
+      </a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-envelope me-2"></i>Liên hệ
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

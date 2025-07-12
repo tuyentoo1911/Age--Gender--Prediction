@@ -1,0 +1,120 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+      <h1 class="display-4 fw-bold mb-4">
+        <i class="bi bi-envelope-fill me-3"></i>
+        Liên hệ với chúng tôi
+      </h1>
+      <p class="lead">
+        Gửi câu hỏi, phản hồi hoặc đề xuất của bạn. Chúng tôi sẽ phản hồi sớm
+        nhất có thể!
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="card">
+      <div class="card-header text-center">
+        <h4><i class="bi bi-chat-dots-fill me-2"></i>Gửi tin nhắn</h4>
+      </div>
+      <div class="card-body">
+        <form method="post">{% csrf_token %} {% crispy form %}</form>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="row mt-5">
+      <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i class="bi bi-envelope-fill feature-icon text-primary"></i>
+            <h5>Email</h5>
+            <p class="text-muted">support@nhandienai.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i class="bi bi-clock-fill feature-icon text-success"></i>
+            <h5>Thời gian phản hồi</h5>
+            <p class="text-muted">Trong vòng 24 giờ</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i class="bi bi-shield-check-fill feature-icon text-warning"></i>
+            <h5>Bảo mật</h5>
+            <p class="text-muted">Thông tin được bảo mật</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Quick Links -->
+    <div class="card mt-5">
+      <div class="card-header">
+        <h5 class="mb-0">
+          <i class="bi bi-question-circle-fill me-2"></i>Câu hỏi thường gặp
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Câu hỏi phổ biến:</h6>
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'about' %}#faq1" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Độ chính xác như thế
+                  nào?
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'about' %}#faq2" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Ảnh có được lưu trữ
+                  không?
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'about' %}#faq3" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Sử dụng trên mobile?
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>Tài liệu:</h6>
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'about' %}" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Giới thiệu chi tiết
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'stats' %}" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Thống kê sử dụng
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'home' %}" class="text-decoration-none">
+                  <i class="bi bi-arrow-right me-1"></i>Thử ngay
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+      <a href="{% url 'home' %}" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-arrow-left me-2"></i>Quay lại trang chủ
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

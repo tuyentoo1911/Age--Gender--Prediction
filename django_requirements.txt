@@ -1,0 +1,36 @@
+# Django và Web Framework
+Django>=4.2.0,<5.0
+django-crispy-forms>=2.0
+crispy-bootstrap5>=0.7
+
+# Machine Learning
+tensorflow>=2.12.0
+numpy>=1.24.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+
+# Image Processing
+opencv-contrib-python>=4.8.0
+
+# Web Server và Deployment
+gunicorn>=21.0.0
+whitenoise>=6.5.0
+
+# Database
+psycopg2-binary>=2.9.0  # PostgreSQL cho production
+
+# Utilities
+python-decouple>=3.8
+requests>=2.31.0
+
+# Development
+django-debug-toolbar>=4.2.0  # Development only
+
+# Security
+django-cors-headers>=4.3.0
+
+# File handling
+django-storages>=1.14.0  # Cho cloud storage nếu cần
+
+# API
+djangorestframework>=3.14.0  # Nếu cần API endpoints 
