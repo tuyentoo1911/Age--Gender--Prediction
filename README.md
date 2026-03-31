@@ -4,13 +4,13 @@
 
 ## ✨ Tính năng
 
-- 📸 **Upload ảnh từ máy tính** - Hỗ trợ JPG, PNG, WEBP
-- 📷 **Chụp ảnh trực tiếp từ camera** - Sử dụng camera của thiết bị
-- 🧠 **AI dự đoán thông minh** - Độ chính xác cao >85%
-- 📱 **Responsive design** - Hoạt động mượt mà trên mọi thiết bị
-- 📊 **Thống kê và lịch sử** - Theo dõi các dự đoán đã thực hiện
-- 💬 **Form liên hệ** - Gửi phản hồi và câu hỏi
-- 🔒 **Bảo mật dữ liệu** - Không lưu trữ ảnh cá nhân lâu dài
+-  **Upload ảnh từ máy tính** - Hỗ trợ JPG, PNG, WEBP
+-  **Chụp ảnh trực tiếp từ camera** - Sử dụng camera của thiết bị
+-  **AI dự đoán thông minh** - Độ chính xác cao >85%
+-  **Responsive design** - Hoạt động mượt mà trên mọi thiết bị
+-  **Thống kê và lịch sử** - Theo dõi các dự đoán đã thực hiện
+-  **Form liên hệ** - Gửi phản hồi và câu hỏi
+-  **Bảo mật dữ liệu** - Không lưu trữ ảnh cá nhân lâu dài
 
 ## 🛠️ Công nghệ sử dụng
 
@@ -313,7 +313,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - OpenCV for image processing utilities
 
 ---
-
-📧 **Contact**: support@yourdomain.com  
-🌐 **Website**: https://yourdomain.com  
-📱 **Demo**: https://demo.yourdomain.com
